@@ -1,6 +1,6 @@
-import Creature from "../Creature";
+import Animal from "../Animal";
 
-export default class Wolf extends Creature {
+export default class Wolf extends Animal {
   constructor() {
     super();
     console.log("wolf moved");
