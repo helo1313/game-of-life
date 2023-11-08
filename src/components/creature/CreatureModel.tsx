@@ -10,12 +10,15 @@ interface CreatureProps {
 }
 
 const CreatureModel: React.FC<CreatureProps> = (props) => {
+  const mapXPosition = props.creatureData.x * (800 / MAP_CELL_AMOUNT);
+  const mapYPosition = props.creatureData.y * (800 / MAP_CELL_AMOUNT);
+
   return (
     <div
       className={classes.creature}
       style={{
-        left: `${props.creatureData.x * (800 / MAP_CELL_AMOUNT)}px`,
-        top: `${props.creatureData.y * (800 / MAP_CELL_AMOUNT)}px`,
+        left: `${mapXPosition}px`,
+        top: `${mapYPosition}px`,
       }}
     ></div>
   );
