@@ -7,4 +7,8 @@ export default class Wolf extends Animal {
     this.name = "Wolf";
     this.strength = 8;
   }
+
+  spawnChild() {
+    return new Wolf();
+  }
 }

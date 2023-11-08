@@ -80,4 +80,8 @@ export default abstract class Animal extends Creature {
       this.isAlive = false;
     }
   }
+
+  spawnChild(): Creature | null {
+    return null;
+  }
 }

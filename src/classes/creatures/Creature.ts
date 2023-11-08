@@ -25,8 +25,8 @@ export default abstract class Creature {
     this.procreateChance = 0.35;
   }
 
-  add(a: number, b: number): number {
-    return 0;
+  spawnChild(): Creature | null {
+    return null;
   }
 
   procreate(
@@ -50,7 +50,7 @@ export default abstract class Creature {
       return { didSuccess: false };
     }
 
-    const newCreature = { ...this };
+    const newCreature = this.spawnChild()!;
     newCreature.x = spot.x!;
     newCreature.y = spot.y!;
 

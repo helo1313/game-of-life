@@ -9,4 +9,8 @@ export default class Sheep extends Animal {
     this.name = "Sheep";
     this.strength = 2;
   }
+
+  spawnChild() {
+    return new Sheep();
+  }
 }
