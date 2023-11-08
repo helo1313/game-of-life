@@ -19,6 +19,7 @@ const CreatureModel: React.FC<CreatureProps> = (props) => {
       style={{
         left: `${mapXPosition}px`,
         top: `${mapYPosition}px`,
+        backgroundColor: `${props.creatureData.color}`,
       }}
     ></div>
   );
