@@ -35,15 +35,23 @@ function App() {
 
   const Play = () => {
     const creatures = [...currentCreatures];
+    let newCreatures: Creature[] = [];
 
     creatures.forEach((creature) => {
       if (creature instanceof Animal) {
         creature.move();
-        creature.interact(creatures);
+        const interactionResult = creature.interact(creatures);
+
+        console.log(interactionResult);
+
+        if (interactionResult.result === "procreate") {
+          newCreatures.push(interactionResult.newCreature!);
+        }
       }
     });
 
-    setCurrentCreatures(removeDead(creatures));
+    const roundEndCreatures = [...removeDead(creatures), ...newCreatures];
+    setCurrentCreatures(roundEndCreatures);
     setCurrentDay((prevState) => {
       return prevState + 1;
     });

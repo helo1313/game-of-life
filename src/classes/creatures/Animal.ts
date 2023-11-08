@@ -21,7 +21,15 @@ export default abstract class Animal extends Creature {
     }
   }
 
-  interact(creatures: Creature[]) {
+  interact(creatures: Creature[]): {
+    result: "attack" | "procreate" | "none";
+    newCreature?: Creature;
+  } {
+    let interactionResult: {
+      result: "attack" | "procreate" | "none";
+      newCreature?: Creature;
+    } = { result: "none" };
+
     const otherCreatures = creatures.filter((creature) => {
       return (
         this !== creature &&
@@ -31,13 +39,34 @@ export default abstract class Animal extends Creature {
       );
     });
 
-    otherCreatures.forEach((creature) => {
-      if (this.name === creature.name) {
-        console.log("procreate");
-      } else {
-        this.attack(creature);
-      }
-    });
+    if (otherCreatures.length === 0) {
+      return interactionResult;
+    }
+
+    if (otherCreatures)
+      otherCreatures.forEach((creature) => {
+        if (this.name === creature.name) {
+          const procreateResult = this.procreate(creature, creatures);
+
+          if (procreateResult.didSuccess) {
+            interactionResult = {
+              result: "procreate",
+              newCreature: procreateResult.newCreature!,
+            };
+          } else {
+            interactionResult = {
+              result: "none",
+            };
+          }
+        } else {
+          this.attack(creature);
+          interactionResult = {
+            result: "attack",
+          };
+        }
+      });
+
+    return interactionResult;
   }
 
   attack(otherCreature: Creature) {
