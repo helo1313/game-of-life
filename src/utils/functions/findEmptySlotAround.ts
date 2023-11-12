@@ -28,6 +28,10 @@ export const findEmptySlotAround: (
     const isEmpty = isSlotEmpty(checkX, checkY, creatures);
     if (isEmpty) {
       return { didSuccess: true, x: checkX, y: checkY };
+    } else {
+      offsets = offsets.filter((_, arrayIndex) => {
+        return index !== arrayIndex;
+      });
     }
   }
 
