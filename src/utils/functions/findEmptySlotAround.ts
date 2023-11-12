@@ -1,6 +1,8 @@
 import { off } from "process";
 import Creature from "../../classes/creatures/Creature";
 import { isSlotEmpty } from "./isSlotEmpty";
+import { isInBound } from "./isInBound";
+import Position from "../Interfaces/positionInterface";
 
 export const findEmptySlotAround: (
   x: number,
@@ -25,7 +27,12 @@ export const findEmptySlotAround: (
     const checkX = offsets[index].offsetX + x;
     const checkY = offsets[index].offsetY + y;
 
+    if (!isInBound({ x: checkX, y: checkY })) {
+      continue;
+    }
+
     const isEmpty = isSlotEmpty(checkX, checkY, creatures);
+    console.log(isEmpty);
     if (isEmpty) {
       return { didSuccess: true, x: checkX, y: checkY };
     } else {

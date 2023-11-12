@@ -19,6 +19,8 @@ export default abstract class Animal extends Creature {
     } else if (this.y < 0) {
       this.y = 0;
     }
+
+    console.log(this.x + " " + this.y);
   }
 
   interact(creatures: Creature[]): {
@@ -79,9 +81,5 @@ export default abstract class Animal extends Creature {
     } else {
       this.isAlive = false;
     }
-  }
-
-  spawnChild(): Creature | null {
-    return null;
   }
 }

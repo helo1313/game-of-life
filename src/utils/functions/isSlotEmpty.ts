@@ -5,11 +5,13 @@ export const isSlotEmpty: (
   y: number,
   creatures: Creature[]
 ) => boolean = (x, y, creatures) => {
+  let result = true;
+
   creatures.forEach((creature) => {
-    if ((creature.isAlive && creature.x === x, creature.y === y)) {
-      return false;
+    if (creature.isAlive && creature.x === x && creature.y === y) {
+      result = false;
     }
   });
 
-  return true;
+  return result;
 };

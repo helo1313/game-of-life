@@ -43,6 +43,7 @@ export default abstract class Creature {
     const spot = findEmptySlotAround(this.x, this.y, creatures);
 
     if (!spot.didSuccess) {
+      console.log("did not success");
       return { didSuccess: false };
     }
 

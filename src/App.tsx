@@ -18,6 +18,12 @@ function App() {
     creatures.push(new Wolf());
     creatures.push(new Wolf());
     creatures.push(new Wolf());
+    creatures.push(new Wolf());
+    creatures.push(new Wolf());
+    creatures.push(new Wolf());
+    creatures.push(new Wolf());
+    creatures.push(new Wolf());
+    creatures.push(new Wolf());
     creatures.push(new Sheep());
 
     return creatures;
