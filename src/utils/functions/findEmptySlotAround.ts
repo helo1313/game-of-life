@@ -31,8 +31,7 @@ export const findEmptySlotAround: (
       continue;
     }
 
-    const isEmpty = isSlotEmpty(checkX, checkY, creatures);
-    console.log(isEmpty);
+    const isEmpty = isSlotEmpty({ x: checkX, y: checkY }, creatures);
     if (isEmpty) {
       return { didSuccess: true, x: checkX, y: checkY };
     } else {

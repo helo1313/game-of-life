@@ -1,10 +1,10 @@
+import Position from "../../utils/Interfaces/positionInterface";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
 import { findEmptySlotAround } from "../../utils/functions/findEmptySlotAround";
 import Wolf from "./animals/Wolf";
 
 export default abstract class Creature {
-  x: number;
-  y: number;
+  position: Position;
 
   color: string;
 
@@ -14,8 +14,10 @@ export default abstract class Creature {
   procreateChance: number;
 
   constructor() {
-    this.x = Math.floor(Math.random() * MAP_CELL_AMOUNT);
-    this.y = Math.floor(Math.random() * MAP_CELL_AMOUNT);
+    this.position = {
+      x: Math.floor(Math.random() * MAP_CELL_AMOUNT),
+      y: Math.floor(Math.random() * MAP_CELL_AMOUNT),
+    };
 
     this.color = "red";
 
@@ -40,7 +42,11 @@ export default abstract class Creature {
       return { didSuccess: false };
     }
 
-    const spot = findEmptySlotAround(this.x, this.y, creatures);
+    const spot = findEmptySlotAround(
+      this.position.x,
+      this.position.y,
+      creatures
+    );
 
     if (!spot.didSuccess) {
       console.log("did not success");
@@ -52,8 +58,8 @@ export default abstract class Creature {
     }
 
     const newCreature = this.spawnChild()!;
-    newCreature.x = spot.x!;
-    newCreature.y = spot.y!;
+    newCreature.position.x = spot.x!;
+    newCreature.position.y = spot.y!;
 
     return { didSuccess: true, newCreature: newCreature };
   }

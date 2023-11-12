@@ -10,8 +10,8 @@ interface CreatureProps {
 }
 
 const CreatureModel: React.FC<CreatureProps> = (props) => {
-  const mapXPosition = props.creatureData.x * (800 / MAP_CELL_AMOUNT);
-  const mapYPosition = props.creatureData.y * (800 / MAP_CELL_AMOUNT);
+  const mapXPosition = props.creatureData.position.x * (800 / MAP_CELL_AMOUNT);
+  const mapYPosition = props.creatureData.position.y * (800 / MAP_CELL_AMOUNT);
 
   return (
     <div

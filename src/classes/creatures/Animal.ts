@@ -6,21 +6,19 @@ export default abstract class Animal extends Creature {
   move() {
     const moveDirection = getDirection();
 
-    this.x += moveDirection.x;
-    if (this.x > MAP_CELL_AMOUNT - 1) {
-      this.x = MAP_CELL_AMOUNT - 1;
-    } else if (this.x < 0) {
-      this.x = 0;
+    this.position.x += moveDirection.x;
+    if (this.position.x > MAP_CELL_AMOUNT - 1) {
+      this.position.x = MAP_CELL_AMOUNT - 1;
+    } else if (this.position.x < 0) {
+      this.position.x = 0;
     }
 
-    this.y += moveDirection.y;
-    if (this.y > MAP_CELL_AMOUNT - 1) {
-      this.y = MAP_CELL_AMOUNT - 1;
-    } else if (this.y < 0) {
-      this.y = 0;
+    this.position.y += moveDirection.y;
+    if (this.position.y > MAP_CELL_AMOUNT - 1) {
+      this.position.y = MAP_CELL_AMOUNT - 1;
+    } else if (this.position.y < 0) {
+      this.position.y = 0;
     }
-
-    console.log(this.x + " " + this.y);
   }
 
   interact(creatures: Creature[]): {
@@ -36,8 +34,8 @@ export default abstract class Animal extends Creature {
       return (
         this !== creature &&
         creature.isAlive &&
-        this.x === creature.x &&
-        this.y === creature.y
+        this.position.x === creature.position.x &&
+        this.position.y === creature.position.y
       );
     });
 
