@@ -8,19 +8,19 @@ import Wolf from "./classes/creatures/animals/Wolf";
 import Animal from "./classes/creatures/Animal";
 import Sheep from "./classes/creatures/animals/Sheep";
 import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
-import EntitiesGrid from "./utils/types/entitiesType";
+import Grid from "./utils/types/entitiesType";
 import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoint";
 
 const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
 
 function App() {
   const [currentDay, setCurrentDay] = useState(0);
-  const [entitiesGrid, setEntitiesGrid] = useState<EntitiesGrid>([[]]);
+  const [entitiesGrid, setEntitiesGrid] = useState<Grid<Creature>>([[]]);
 
   const [currentCreatures, setCurrentCreatures] = useState<Creature[]>([]);
 
   const initGame = () => {
-    let initEntitiresGrid: EntitiesGrid = [[]];
+    let initEntitiresGrid: Grid<Creature> = [[]];
 
     for (let i = 0; i < MAP_CELL_AMOUNT; i++) {
       initEntitiresGrid.push([]);

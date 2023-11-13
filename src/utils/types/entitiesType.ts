@@ -1,5 +1,5 @@
 import Creature from "../../classes/creatures/Creature";
 
-type EntitiesGrid = Array<Array<Creature | null>>;
+type Grid<T> = Array<Array<T | null>>;
 
-export default EntitiesGrid;
+export default Grid;
