@@ -7,21 +7,44 @@ import Creature from "./classes/creatures/Creature";
 import Wolf from "./classes/creatures/animals/Wolf";
 import Animal from "./classes/creatures/Animal";
 import Sheep from "./classes/creatures/animals/Sheep";
+import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
+import EntitiesGrid from "./utils/types/entitiesType";
+import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoint";
+
+const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
 
 function App() {
   const [currentDay, setCurrentDay] = useState(0);
+  const [entitiesGrid, setEntitiesGrid] = useState<EntitiesGrid>([[]]);
+
   const [currentCreatures, setCurrentCreatures] = useState<Creature[]>([]);
+
+  const initGame = () => {
+    let initEntitiresGrid: EntitiesGrid = [[]];
+
+    for (let i = 0; i < MAP_CELL_AMOUNT; i++) {
+      initEntitiresGrid.push([]);
+      for (let j = 0; j < MAP_CELL_AMOUNT; j++) {
+        initEntitiresGrid[i]!.push(null);
+      }
+    }
+
+    // we want to pop the element that was inited at declaration, this is the easiest way to correctly build our map
+    initEntitiresGrid.pop();
+
+    DOMMY_ENTITIES.forEach((entity) => {
+      const position = getRandomEmptyGridPoint(initEntitiresGrid);
+      initEntitiresGrid[position.x][position.y] = entity;
+    });
+
+    console.log(initEntitiresGrid);
+  };
+
+  initGame();
 
   const spawn: () => Creature[] = () => {
     let creatures: Creature[] = [];
 
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
     creatures.push(new Wolf());
     creatures.push(new Wolf());
     creatures.push(new Sheep());
