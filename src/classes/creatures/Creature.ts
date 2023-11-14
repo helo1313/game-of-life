@@ -1,3 +1,5 @@
+import PlayRoundData from "../../utils/Interfaces/playRoundDataInterface";
+import { PlayRoundResult } from "../../utils/Interfaces/playRoundResultInterface";
 import Position from "../../utils/Interfaces/positionInterface";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
 import { findEmptySlotAround } from "../../utils/functions/findEmptySlotAround";
@@ -25,6 +27,10 @@ export default abstract class Creature {
     this.isAlive = true;
     this.strength = 0;
     this.procreateChance = 0.35;
+  }
+
+  playRound(roundData: PlayRoundData<Creature>): PlayRoundResult {
+    return { action: "none" };
   }
 
   spawnChild(): Creature | null {

@@ -10,6 +10,7 @@ import Sheep from "./classes/creatures/animals/Sheep";
 import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
 import Grid from "./utils/types/entitiesType";
 import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoint";
+import { PlayRoundResultMove } from "./utils/Interfaces/playRoundResultInterface";
 
 const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
 
@@ -49,20 +50,6 @@ function App() {
     initGame();
   }, []);
 
-  const spawn: () => Creature[] = () => {
-    let creatures: Creature[] = [];
-
-    creatures.push(new Wolf());
-    creatures.push(new Wolf());
-    creatures.push(new Sheep());
-
-    return creatures;
-  };
-
-  useEffect(() => {
-    setCurrentCreatures(spawn());
-  }, []);
-
   const removeDead: (creatures: Creature[]) => Creature[] = (creatures) => {
     return creatures.filter((creature) => {
       return creature.isAlive;
@@ -70,24 +57,46 @@ function App() {
   };
 
   const Play = () => {
-    const creatures = [...currentCreatures];
-    let newCreatures: Creature[] = [];
+    // const creatures = [...currentCreatures];
+    // let newCreatures: Creature[] = [];
 
-    creatures.forEach((creature) => {
-      if (creature instanceof Animal) {
-        creature.move();
-        const interactionResult = creature.interact(creatures);
+    // creatures.forEach((creature) => {
+    //   if (creature instanceof Animal) {
+    //     creature.move();
+    //     const interactionResult = creature.interact(creatures);
 
-        console.log(interactionResult);
+    //     console.log(interactionResult);
 
-        if (interactionResult.result === "procreate") {
-          newCreatures.push(interactionResult.newCreature!);
-        }
-      }
+    //     if (interactionResult.result === "procreate") {
+    //       newCreatures.push(interactionResult.newCreature!);
+    //     }
+    //   }
+    // });
+
+    // const roundEndCreatures = [...removeDead(creatures), ...newCreatures];
+    // setCurrentCreatures(roundEndCreatures);
+
+    // TODO: Check if copying entitiesGrid will be good when working with state or
+    // if we need to use (prevGrid) => {} to mutate state in proper way
+
+    setEntitiesGrid((prevGrid) => {
+      const roundGrid: Grid<Creature> = [...prevGrid];
+
+      roundGrid.forEach((gridRow, y) => {
+        gridRow.forEach((entity, x) => {
+          if (entity) {
+            const position = { x, y };
+            const result = entity.playRound({
+              grid: roundGrid,
+              position: position,
+            });
+          }
+        });
+      });
+
+      return roundGrid;
     });
 
-    const roundEndCreatures = [...removeDead(creatures), ...newCreatures];
-    setCurrentCreatures(roundEndCreatures);
     setCurrentDay((prevState) => {
       return prevState + 1;
     });
