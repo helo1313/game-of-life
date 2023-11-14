@@ -4,14 +4,18 @@ import Creature from "../../classes/creatures/Creature";
 
 import classes from "./CreatureModel.module.scss";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
+import Position from "../../utils/Interfaces/positionInterface";
 
 interface CreatureProps {
-  creatureData: Creature;
+  entity: Creature;
+  position: Position;
 }
 
 const CreatureModel: React.FC<CreatureProps> = (props) => {
-  const mapXPosition = props.creatureData.position.x * (800 / MAP_CELL_AMOUNT);
-  const mapYPosition = props.creatureData.position.y * (800 / MAP_CELL_AMOUNT);
+  const { entity, position } = props;
+
+  const mapXPosition = position.x * (600 / MAP_CELL_AMOUNT);
+  const mapYPosition = position.y * (600 / MAP_CELL_AMOUNT);
 
   return (
     <div
@@ -19,7 +23,7 @@ const CreatureModel: React.FC<CreatureProps> = (props) => {
       style={{
         left: `${mapXPosition}px`,
         top: `${mapYPosition}px`,
-        backgroundColor: `${props.creatureData.color}`,
+        backgroundColor: `${props.entity.color}`,
       }}
     ></div>
   );

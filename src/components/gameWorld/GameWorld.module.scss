@@ -1,6 +1,8 @@
 .gameWorld {
   position: relative;
-  width: 800px;
-  height: 800px;
+  width: 600px;
+  min-width: 600px;
+  height: 600px;
+  min-height: 600px;
   border: 1px solid black;
 }

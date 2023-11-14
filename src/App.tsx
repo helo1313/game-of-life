@@ -42,9 +42,12 @@ function App() {
     });
 
     console.log(initEntitiresGrid);
+    setEntitiesGrid(initEntitiresGrid);
   };
 
-  initGame();
+  useEffect(() => {
+    initGame();
+  }, []);
 
   const spawn: () => Creature[] = () => {
     let creatures: Creature[] = [];
@@ -93,7 +96,7 @@ function App() {
   return (
     <div className={classes.app}>
       <p>Day {currentDay}</p>
-      <GameWorld creatures={currentCreatures} />
+      <GameWorld grid={entitiesGrid} />
       <button className={classes.playButton} onClick={Play}>
         Play
       </button>
