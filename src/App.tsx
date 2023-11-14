@@ -33,8 +33,12 @@ function App() {
     initEntitiresGrid.pop();
 
     DOMMY_ENTITIES.forEach((entity) => {
-      const position = getRandomEmptyGridPoint(initEntitiresGrid);
-      initEntitiresGrid[position.x][position.y] = entity;
+      const result = getRandomEmptyGridPoint(initEntitiresGrid);
+      if (result.didSuccess) {
+        initEntitiresGrid[result.position!.x][result.position!.y] = entity;
+      } else {
+        console.log("unable to find position for entity " + entity);
+      }
     });
 
     console.log(initEntitiresGrid);
