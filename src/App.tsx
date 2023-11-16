@@ -84,15 +84,36 @@ function App() {
 
       roundGrid.forEach((gridRow, y) => {
         gridRow.forEach((entity, x) => {
+          const position = { x, y };
           if (entity) {
-            const position = { x, y };
             const result = entity.playRound({
               grid: roundGrid,
               position: position,
+              round: currentDay + 1,
             });
+
+            console.log(result.action);
+            switch (result.action) {
+              case "move": {
+                const moveResult = result as PlayRoundResultMove;
+                if (
+                  roundGrid[moveResult.newPosition.y][
+                    moveResult.newPosition.x
+                  ] !== roundGrid[position.y][position.x]
+                ) {
+                  roundGrid[moveResult.newPosition.y][
+                    moveResult.newPosition.x
+                  ] = roundGrid[position.y][position.x];
+                  roundGrid[position.y][position.x] = null;
+                }
+                break;
+              }
+            }
           }
         });
       });
+
+      console.log(roundGrid);
 
       return roundGrid;
     });

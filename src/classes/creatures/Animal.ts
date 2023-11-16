@@ -1,24 +1,36 @@
+import PlayRoundData from "../../utils/Interfaces/playRoundDataInterface";
+import { PlayRoundResult } from "../../utils/Interfaces/playRoundResultInterface";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
 import { getDirection } from "../../utils/functions/getDirection";
+import { isPositionEmpty } from "../../utils/functions/isPositionEmpty";
 import Creature from "./Creature";
 
 export default abstract class Animal extends Creature {
-  move() {
+  play(roundData: PlayRoundData<Creature>): PlayRoundResult {
+    const { position, grid } = roundData;
     const moveDirection = getDirection();
 
-    this.position.x += moveDirection.x;
-    if (this.position.x > MAP_CELL_AMOUNT - 1) {
-      this.position.x = MAP_CELL_AMOUNT - 1;
-    } else if (this.position.x < 0) {
-      this.position.x = 0;
+    let x = position.x + moveDirection.x;
+    if (x > MAP_CELL_AMOUNT - 1) {
+      x = MAP_CELL_AMOUNT - 1;
+    } else if (x < 0) {
+      x = 0;
     }
 
-    this.position.y += moveDirection.y;
-    if (this.position.y > MAP_CELL_AMOUNT - 1) {
-      this.position.y = MAP_CELL_AMOUNT - 1;
-    } else if (this.position.y < 0) {
-      this.position.y = 0;
+    let y = position.y + moveDirection.y;
+    if (y > MAP_CELL_AMOUNT - 1) {
+      y = MAP_CELL_AMOUNT - 1;
+    } else if (y < 0) {
+      y = 0;
     }
+
+    if (isPositionEmpty({ x, y }, grid)) {
+      return { action: "move", newPosition: { x, y } };
+    } else {
+      console.log("NOT EMPTY SLOT");
+    }
+
+    return { action: "none" };
   }
 
   interact(creatures: Creature[]): {

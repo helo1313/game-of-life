@@ -6,5 +6,5 @@ export const isPositionEmpty: <T>(
   position: Position,
   grid: Grid<T>
 ) => boolean = (position, grid) => {
-  return grid[position.x][position.y] === null;
+  return grid[position.y][position.x] === null;
 };
