@@ -30,5 +30,3 @@ const GameWorld: React.FC<GameWorldProps<Creature>> = (props) => {
 };
 
 export default GameWorld;
-
-// <CreatureModel key={Math.random()} creatureData={creatureInstance} />

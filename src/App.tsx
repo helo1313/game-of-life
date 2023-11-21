@@ -5,7 +5,6 @@ import classes from "./App.module.scss";
 import GameWorld from "./components/gameWorld/GameWorld";
 import Creature from "./classes/creatures/Creature";
 import Wolf from "./classes/creatures/animals/Wolf";
-import Animal from "./classes/creatures/Animal";
 import Rabbit from "./classes/creatures/animals/Rabbit";
 import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
 import Grid from "./utils/types/entitiesType";
@@ -41,12 +40,9 @@ function App() {
       const result = getRandomEmptyGridPoint(initEntitiresGrid);
       if (result.didSuccess) {
         initEntitiresGrid[result.position!.x][result.position!.y] = entity;
-      } else {
-        console.log("unable to find position for entity " + entity);
       }
     });
 
-    console.log(initEntitiresGrid);
     setEntitiesGrid(initEntitiresGrid);
   };
 
