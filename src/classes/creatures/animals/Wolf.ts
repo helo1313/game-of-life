@@ -5,6 +5,7 @@ export default class Wolf extends Animal {
     super();
 
     this.name = "Wolf";
+    this.icon = "🦊";
     this.strength = 8;
   }
 

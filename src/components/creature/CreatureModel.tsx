@@ -23,9 +23,12 @@ const CreatureModel: React.FC<CreatureProps> = (props) => {
       style={{
         left: `${mapXPosition}px`,
         top: `${mapYPosition}px`,
-        backgroundColor: `${props.entity.color}`,
       }}
-    ></div>
+    >
+      <p className={classes.icon}>
+        <span>{props.entity.icon}</span>
+      </p>
+    </div>
   );
 };
 

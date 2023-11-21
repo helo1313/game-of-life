@@ -14,10 +14,9 @@ export default abstract class Creature {
   position: Position;
   lastPlayRound: number;
 
-  color: string;
-
   isAlive: boolean;
   name: string;
+  icon: string;
   strength: number;
   procreateChance: number;
 
@@ -28,9 +27,9 @@ export default abstract class Creature {
     };
     this.lastPlayRound = 0;
 
-    this.color = "red";
-
     this.name = "";
+    this.icon = "🛑";
+
     this.isAlive = true;
     this.strength = 0;
     this.procreateChance = 0.35;

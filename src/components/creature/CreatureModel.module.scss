@@ -1,6 +1,22 @@
 .creature {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 60px;
   height: 60px;
-  background-color: red;
+}
+
+.icon {
+  // Override any img styles to ensure Emojis are displayed inline
+  margin: 0px !important;
+  display: inline !important;
+
+  height: auto;
+  width: 60px;
+
+  span {
+    font-size: 60px;
+    line-height: 60px;
+  }
 }

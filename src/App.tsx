@@ -6,7 +6,7 @@ import GameWorld from "./components/gameWorld/GameWorld";
 import Creature from "./classes/creatures/Creature";
 import Wolf from "./classes/creatures/animals/Wolf";
 import Animal from "./classes/creatures/Animal";
-import Sheep from "./classes/creatures/animals/Sheep";
+import Rabbit from "./classes/creatures/animals/Rabbit";
 import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
 import Grid from "./utils/types/entitiesType";
 import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoint";
@@ -18,7 +18,7 @@ import {
 import { move } from "./utils/functions/move";
 import { removeDead } from "./utils/functions/removeDead";
 
-const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
+const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Rabbit()];
 
 function App() {
   const [currentDay, setCurrentDay] = useState(0);
