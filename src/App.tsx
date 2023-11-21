@@ -10,7 +10,10 @@ import Sheep from "./classes/creatures/animals/Sheep";
 import { MAP_CELL_AMOUNT } from "./utils/constans/gameSettings";
 import Grid from "./utils/types/entitiesType";
 import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoint";
-import { PlayRoundResultMove } from "./utils/Interfaces/playRoundResultInterface";
+import {
+  PlayRoundResultAttack,
+  PlayRoundResultMove,
+} from "./utils/Interfaces/playRoundResultInterface";
 
 const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
 
@@ -50,9 +53,13 @@ function App() {
     initGame();
   }, []);
 
-  const removeDead: (creatures: Creature[]) => Creature[] = (creatures) => {
-    return creatures.filter((creature) => {
-      return creature.isAlive;
+  const removeDead: (grid: Grid<Creature>) => void = (grid) => {
+    grid.forEach((gridRow, indexY) => {
+      gridRow.forEach((element, indexX) => {
+        if (!element?.isAlive) {
+          element = null;
+        }
+      });
     });
   };
 
@@ -108,12 +115,26 @@ function App() {
                 }
                 break;
               }
+              case "attack-success": {
+                const attackResult = result as PlayRoundResultAttack;
+                if (
+                  roundGrid[attackResult.newPosition.y][
+                    attackResult.newPosition.x
+                  ] !== roundGrid[position.y][position.x]
+                ) {
+                  roundGrid[attackResult.newPosition.y][
+                    attackResult.newPosition.x
+                  ] = roundGrid[position.y][position.x];
+                  roundGrid[position.y][position.x] = null;
+                }
+                break;
+              }
             }
           }
         });
       });
 
-      console.log(roundGrid);
+      removeDead(roundGrid);
 
       return roundGrid;
     });

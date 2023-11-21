@@ -7,10 +7,14 @@ export type PlayRoundResult =
   | PlayRoundResultProcreate;
 
 export interface PlayRoundResultInterface {
-  action: "none" | "move" | "attack" | "procreate";
+  action: "none" | "move" | "attack-success" | "attack-failed" | "procreate";
 }
 
 export interface PlayRoundResultMove extends PlayRoundResultInterface {
+  newPosition: Position;
+}
+
+export interface PlayRoundResultAttack extends PlayRoundResultInterface {
   newPosition: Position;
 }
 

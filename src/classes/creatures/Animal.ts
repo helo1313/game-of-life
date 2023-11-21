@@ -27,7 +27,18 @@ export default abstract class Animal extends Creature {
     if (isPositionEmpty({ x, y }, grid)) {
       return { action: "move", newPosition: { x, y } };
     } else {
-      console.log("NOT EMPTY SLOT");
+      const other = grid[y][x]!;
+
+      if (other.name === this.name) {
+        // Procreate
+      } else {
+        const attackSuccess = this.attack(other);
+        if (attackSuccess) {
+          return { action: "attack-success", newPosition: { x, y } };
+        } else {
+          return { action: "attack-failed" };
+        }
+      }
     }
 
     return { action: "none" };
@@ -83,13 +94,15 @@ export default abstract class Animal extends Creature {
 
   attack(otherCreature: Creature) {
     if (!otherCreature.isAlive) {
-      return;
+      return true;
     }
 
     if (this.strength > otherCreature.strength) {
       otherCreature.isAlive = false;
+      return true;
     } else {
       this.isAlive = false;
+      return false;
     }
   }
 }
