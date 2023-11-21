@@ -16,6 +16,7 @@ import {
 } from "./utils/Interfaces/playRoundResultInterface";
 import { move } from "./utils/functions/move";
 import { removeDead } from "./utils/functions/removeDead";
+import Button from "./components/ui/Button";
 
 const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Rabbit()];
 
@@ -101,9 +102,7 @@ function App() {
     <div className={classes.app}>
       <p>Day {currentDay}</p>
       <GameWorld grid={entitiesGrid} />
-      <button className={classes.playButton} onClick={Play}>
-        Play
-      </button>
+      <Button onClick={Play}>Play</Button>
     </div>
   );
 }
