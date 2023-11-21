@@ -14,14 +14,14 @@ import {
   PlayRoundResultAttack,
   PlayRoundResultMove,
 } from "./utils/Interfaces/playRoundResultInterface";
+import { move } from "./utils/functions/move";
+import { removeDead } from "./utils/functions/removeDead";
 
 const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Sheep()];
 
 function App() {
   const [currentDay, setCurrentDay] = useState(0);
   const [entitiesGrid, setEntitiesGrid] = useState<Grid<Creature>>([[]]);
-
-  const [currentCreatures, setCurrentCreatures] = useState<Creature[]>([]);
 
   const initGame = () => {
     let initEntitiresGrid: Grid<Creature> = [[]];
@@ -53,39 +53,7 @@ function App() {
     initGame();
   }, []);
 
-  const removeDead: (grid: Grid<Creature>) => void = (grid) => {
-    grid.forEach((gridRow, indexY) => {
-      gridRow.forEach((element, indexX) => {
-        if (!element?.isAlive) {
-          element = null;
-        }
-      });
-    });
-  };
-
   const Play = () => {
-    // const creatures = [...currentCreatures];
-    // let newCreatures: Creature[] = [];
-
-    // creatures.forEach((creature) => {
-    //   if (creature instanceof Animal) {
-    //     creature.move();
-    //     const interactionResult = creature.interact(creatures);
-
-    //     console.log(interactionResult);
-
-    //     if (interactionResult.result === "procreate") {
-    //       newCreatures.push(interactionResult.newCreature!);
-    //     }
-    //   }
-    // });
-
-    // const roundEndCreatures = [...removeDead(creatures), ...newCreatures];
-    // setCurrentCreatures(roundEndCreatures);
-
-    // TODO: Check if copying entitiesGrid will be good when working with state or
-    // if we need to use (prevGrid) => {} to mutate state in proper way
-
     setEntitiesGrid((prevGrid) => {
       const roundGrid: Grid<Creature> = [...prevGrid];
 
@@ -99,34 +67,15 @@ function App() {
               round: currentDay + 1,
             });
 
-            console.log(result.action);
             switch (result.action) {
               case "move": {
                 const moveResult = result as PlayRoundResultMove;
-                if (
-                  roundGrid[moveResult.newPosition.y][
-                    moveResult.newPosition.x
-                  ] !== roundGrid[position.y][position.x]
-                ) {
-                  roundGrid[moveResult.newPosition.y][
-                    moveResult.newPosition.x
-                  ] = roundGrid[position.y][position.x];
-                  roundGrid[position.y][position.x] = null;
-                }
+                move(position, moveResult.newPosition, roundGrid);
                 break;
               }
               case "attack-success": {
                 const attackResult = result as PlayRoundResultAttack;
-                if (
-                  roundGrid[attackResult.newPosition.y][
-                    attackResult.newPosition.x
-                  ] !== roundGrid[position.y][position.x]
-                ) {
-                  roundGrid[attackResult.newPosition.y][
-                    attackResult.newPosition.x
-                  ] = roundGrid[position.y][position.x];
-                  roundGrid[position.y][position.x] = null;
-                }
+                move(position, attackResult.newPosition, roundGrid);
                 break;
               }
             }
