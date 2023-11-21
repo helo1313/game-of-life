@@ -29,8 +29,14 @@ export default abstract class Animal extends Creature {
     } else {
       const other = grid[y][x]!;
 
+      if (other === this) {
+        console.log(" cant fuck it self");
+        return { action: "none" };
+      }
+
       if (other.name === this.name) {
-        // Procreate
+        const procreateResult = this.procreate({ x, y }, other, grid);
+        return procreateResult;
       } else {
         const attackSuccess = this.attack(other);
         if (attackSuccess) {
@@ -42,54 +48,6 @@ export default abstract class Animal extends Creature {
     }
 
     return { action: "none" };
-  }
-
-  interact(creatures: Creature[]): {
-    result: "attack" | "procreate" | "none";
-    newCreature?: Creature;
-  } {
-    let interactionResult: {
-      result: "attack" | "procreate" | "none";
-      newCreature?: Creature;
-    } = { result: "none" };
-
-    const otherCreatures = creatures.filter((creature) => {
-      return (
-        this !== creature &&
-        creature.isAlive &&
-        this.position.x === creature.position.x &&
-        this.position.y === creature.position.y
-      );
-    });
-
-    if (otherCreatures.length === 0) {
-      return interactionResult;
-    }
-
-    if (otherCreatures)
-      otherCreatures.forEach((creature) => {
-        if (this.name === creature.name) {
-          const procreateResult = this.procreate(creature, creatures);
-
-          if (procreateResult.didSuccess) {
-            interactionResult = {
-              result: "procreate",
-              newCreature: procreateResult.newCreature!,
-            };
-          } else {
-            interactionResult = {
-              result: "none",
-            };
-          }
-        } else {
-          this.attack(creature);
-          interactionResult = {
-            result: "attack",
-          };
-        }
-      });
-
-    return interactionResult;
   }
 
   attack(otherCreature: Creature) {

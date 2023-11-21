@@ -20,4 +20,5 @@ export interface PlayRoundResultAttack extends PlayRoundResultInterface {
 
 export interface PlayRoundResultProcreate extends PlayRoundResultInterface {
   newEntity: Creature;
+  newEntityPosition: Position;
 }

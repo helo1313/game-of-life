@@ -1,8 +1,12 @@
 import PlayRoundData from "../../utils/Interfaces/playRoundDataInterface";
-import { PlayRoundResult } from "../../utils/Interfaces/playRoundResultInterface";
+import {
+  PlayRoundResult,
+  PlayRoundResultProcreate,
+} from "../../utils/Interfaces/playRoundResultInterface";
 import Position from "../../utils/Interfaces/positionInterface";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
 import { findEmptySlotAround } from "../../utils/functions/findEmptySlotAround";
+import Grid from "../../utils/types/entitiesType";
 import Animal from "./Animal";
 import Wolf from "./animals/Wolf";
 
@@ -54,35 +58,30 @@ export default abstract class Creature {
   }
 
   procreate(
+    actionPosition: Position,
     otherCreature: Creature,
-    creatures: Creature[]
-  ): {
-    didSuccess: boolean;
-    newCreature?: Creature;
-  } {
+    grid: Grid<Creature>
+  ): PlayRoundResult {
     if (!this.isAlive || !otherCreature.isAlive) {
-      return { didSuccess: false };
-    }
-
-    const spot = findEmptySlotAround(
-      this.position.x,
-      this.position.y,
-      creatures
-    );
-
-    if (!spot.didSuccess) {
-      console.log("did not success");
-      return { didSuccess: false };
+      return { action: "none" };
     }
 
     if (this.procreateChance < Math.random()) {
-      return { didSuccess: false };
+      return { action: "none" };
+    }
+
+    const spot = findEmptySlotAround(actionPosition, grid);
+
+    if (!spot.didSuccess) {
+      return { action: "none" };
     }
 
     const newCreature = this.spawnChild()!;
-    newCreature.position.x = spot.x!;
-    newCreature.position.y = spot.y!;
 
-    return { didSuccess: true, newCreature: newCreature };
+    return {
+      action: "procreate",
+      newEntity: newCreature,
+      newEntityPosition: spot.newEntitiyPosition!,
+    };
   }
 }

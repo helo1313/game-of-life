@@ -13,6 +13,7 @@ import { getRandomEmptyGridPoint } from "./utils/functions/getRandomEmptyGridPoi
 import {
   PlayRoundResultAttack,
   PlayRoundResultMove,
+  PlayRoundResultProcreate,
 } from "./utils/Interfaces/playRoundResultInterface";
 import { move } from "./utils/functions/move";
 import { removeDead } from "./utils/functions/removeDead";
@@ -76,6 +77,13 @@ function App() {
               case "attack-success": {
                 const attackResult = result as PlayRoundResultAttack;
                 move(position, attackResult.newPosition, roundGrid);
+                break;
+              }
+              case "procreate": {
+                const procreateResult = result as PlayRoundResultProcreate;
+                roundGrid[procreateResult.newEntityPosition.y][
+                  procreateResult.newEntityPosition.x
+                ] = procreateResult.newEntity;
                 break;
               }
             }

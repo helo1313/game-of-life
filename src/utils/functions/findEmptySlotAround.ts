@@ -3,12 +3,16 @@ import Creature from "../../classes/creatures/Creature";
 import { isSlotEmpty } from "./isSlotEmpty";
 import { isInBound } from "./isInBound";
 import Position from "../Interfaces/positionInterface";
+import Grid from "../types/entitiesType";
+import { isPositionEmpty } from "./isPositionEmpty";
 
 export const findEmptySlotAround: (
-  x: number,
-  y: number,
-  creatures: Creature[]
-) => { didSuccess: boolean; x?: number; y?: number } = (x, y, creatures) => {
+  position: Position,
+  grid: Grid<Creature>
+) => { didSuccess: boolean; newEntitiyPosition?: Position } = (
+  position,
+  grid
+) => {
   let offsets = [
     { offsetX: 1, offsetY: 1 },
     { offsetX: 1, offsetY: 0 },
@@ -24,16 +28,21 @@ export const findEmptySlotAround: (
   while (offsets.length > 0) {
     const index = Math.floor(Math.random() * offsets.length);
 
-    const checkX = offsets[index].offsetX + x;
-    const checkY = offsets[index].offsetY + y;
+    const checkPosition = {
+      x: offsets[index].offsetX + position.x,
+      y: offsets[index].offsetY + position.y,
+    };
 
-    if (!isInBound({ x: checkX, y: checkY })) {
+    if (!isInBound(checkPosition)) {
+      offsets = offsets.filter((_, arrayIndex) => {
+        return index !== arrayIndex;
+      });
       continue;
     }
 
-    const isEmpty = isSlotEmpty({ x: checkX, y: checkY }, creatures);
+    const isEmpty = isPositionEmpty(checkPosition, grid);
     if (isEmpty) {
-      return { didSuccess: true, x: checkX, y: checkY };
+      return { didSuccess: true, newEntitiyPosition: checkPosition };
     } else {
       offsets = offsets.filter((_, arrayIndex) => {
         return index !== arrayIndex;
