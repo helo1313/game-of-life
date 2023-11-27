@@ -1,14 +1,7 @@
 import PlayRoundData from "../../utils/Interfaces/playRoundDataInterface";
-import {
-  PlayRoundResult,
-  PlayRoundResultProcreate,
-} from "../../utils/Interfaces/playRoundResultInterface";
+import { PlayRoundResult } from "../../utils/Interfaces/playRoundResultInterface";
 import Position from "../../utils/Interfaces/positionInterface";
 import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
-import { findEmptySlotAround } from "../../utils/functions/findEmptySlotAround";
-import Grid from "../../utils/types/entitiesType";
-import Animal from "./Animal";
-import Wolf from "./animals/Wolf";
 
 export default abstract class Creature {
   position: Position;
@@ -42,45 +35,18 @@ export default abstract class Creature {
 
     this.lastPlayRound = roundData.round;
 
-    if (this instanceof Animal) {
-      const result = this.play(roundData);
-      return result;
-    } else {
-      console.log("nie animal");
-    }
+    let result: PlayRoundResult = { action: "none" };
 
+    result = this.play(roundData);
+
+    return result;
+  }
+
+  play(roundData: PlayRoundData<Creature>): PlayRoundResult {
     return { action: "none" };
   }
 
   spawnChild(): Creature | null {
     return null;
-  }
-
-  procreate(
-    actionPosition: Position,
-    otherCreature: Creature,
-    grid: Grid<Creature>
-  ): PlayRoundResult {
-    if (!this.isAlive || !otherCreature.isAlive) {
-      return { action: "none" };
-    }
-
-    if (this.procreateChance < Math.random()) {
-      return { action: "none" };
-    }
-
-    const spot = findEmptySlotAround(actionPosition, grid);
-
-    if (!spot.didSuccess) {
-      return { action: "none" };
-    }
-
-    const newCreature = this.spawnChild()!;
-
-    return {
-      action: "procreate",
-      newEntity: newCreature,
-      newEntityPosition: spot.newEntitiyPosition!,
-    };
   }
 }

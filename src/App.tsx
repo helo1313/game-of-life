@@ -17,8 +17,15 @@ import {
 import { move } from "./utils/functions/move";
 import { removeDead } from "./utils/functions/removeDead";
 import Button from "./components/ui/Button";
+import Bamboo from "./classes/creatures/plants/Bamboo";
 
-const DOMMY_ENTITIES = [new Wolf(), new Wolf(), new Wolf(), new Rabbit()];
+const DOMMY_ENTITIES = [
+  new Wolf(),
+  new Wolf(),
+  new Wolf(),
+  new Rabbit(),
+  new Bamboo(),
+];
 
 function App() {
   const [currentDay, setCurrentDay] = useState(0);
