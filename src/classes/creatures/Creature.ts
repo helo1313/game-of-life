@@ -5,7 +5,7 @@ import { MAP_CELL_AMOUNT } from "../../utils/constans/gameSettings";
 
 export default abstract class Creature {
   position: Position;
-  lastPlayRound: number;
+  protected lastPlayRound: number;
 
   isAlive: boolean;
   name: string;
@@ -42,11 +42,11 @@ export default abstract class Creature {
     return result;
   }
 
-  play(roundData: PlayRoundData<Creature>): PlayRoundResult {
+  protected play(roundData: PlayRoundData<Creature>): PlayRoundResult {
     return { action: "none" };
   }
 
-  spawnChild(): Creature | null {
+  protected spawnChild(): Creature | null {
     return null;
   }
 }

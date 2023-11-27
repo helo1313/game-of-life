@@ -8,6 +8,7 @@ export default class Bamboo extends Plant {
     this.strength = 0;
     this.procreateChance = 0.075;
   }
+
   spawnChild() {
     return new Bamboo();
   }

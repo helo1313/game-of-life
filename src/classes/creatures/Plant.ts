@@ -11,17 +11,21 @@ export default abstract class Plant extends Creature {
     const result = this.trySpread(roundData.position, roundData.grid);
     return result;
   }
+
   trySpread(actionPosition: Position, grid: Grid<Creature>): PlayRoundResult {
     if (!this.isAlive) {
       return { action: "none" };
     }
+
     if (this.procreateChance < Math.random()) {
       return { action: "none" };
     }
+
     const spot = findEmptySlotAround(actionPosition, grid);
     if (!spot.didSuccess) {
       return { action: "none" };
     }
+
     const newCreature = this.spawnChild()!;
     return {
       action: "procreate",
